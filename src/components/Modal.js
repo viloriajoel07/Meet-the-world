@@ -17,8 +17,13 @@ const Modal = ({
   let detail = {};
   let length = 0;
   if (country) {
-    const languages = Object.values(country.languages);
-    const currencies = Object.values(country.currencies);
+    const languages = country.languages
+      ? Object.values(country.languages)
+      : ["undefined"];
+    const currencies = country.currencies
+      ? Object.values(country.currencies)
+      : "";
+    const capital = country.capital ? country.capital[0] : "undefined";
     detail = {
       name: country.name.common,
       flag: country.flags.png,
@@ -27,11 +32,11 @@ const Modal = ({
       population: country.population,
       status: country.status,
       officialName: country.name.official,
-      capital: country.capital[0],
-      currencies: currencies[0].name,
-      symbolCurrencies: currencies[0].symbol,
+      capital,
+      currencies: country.currencies ? currencies[0].name : "undefined",
+      symbolCurrencies: country.currencies ? currencies[0].symbol : "undefined",
       languages: languages,
-      continent: country.continents[0],
+      continent: country.continents ? country.continents[0] : "undefined",
     };
 
     length = countries.length - 1;
