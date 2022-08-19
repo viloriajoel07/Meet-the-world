@@ -12,19 +12,6 @@ const Card = ({ country, id, handleModal, search }) => {
     }
   };
 
-  // if (!country) {
-  //   return (
-  //     <div className="w-full flex flex-col justify-center">
-  //       <p className="text-3xl mb-4 font-bold text-slate-800 text-center">
-  //         COUNTRY NOT FOUND
-  //       </p>
-  //       <span className="w-56 text-center font-bold text-slate-800 text-xl m-auto text-ellipsis overflow-hidden whitespace-nowrap">
-  //         {search}
-  //       </span>
-  //     </div>
-  //   );
-  // }
-
   return (
     <>
       <a id={id} onClick={(e) => handleModal(id)}>

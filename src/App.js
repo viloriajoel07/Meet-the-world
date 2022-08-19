@@ -1,86 +1,36 @@
 import { faFlag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Cards from "./components/Cards";
 import FloatButton from "./components/FloatButton";
 import Modal from "./components/Modal";
+import { useModal } from "./hooks/useModal";
+import { useSearch } from "./hooks/useSearch";
+import { getCountries } from "./store/slices/countries";
 
 const App = () => {
-  const [countries, setCountries] = useState([]);
-  const [search, setSearch] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [classBlur, setClassBlur] = useState(false);
-  const [disabledButton, setDisabledButton] = useState(false);
-  // const [filtered, setFiltered]
-  let filtered = [];
-
-  const [index, setIndex] = useState(0);
-  // let index = 0;
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    api();
+    dispatch(getCountries());
   }, []);
 
-  const api = async () => {
-    fetch("https://restcountries.com/v3.1/all")
-      .then((response) => response.json())
-      .then((data) => {
-        setCountries(data);
-      });
-  };
+  const stateCountries = useSelector((state) => state.countries);
 
-  const handleChange = (e) => {
-    setSearch(e.target.value);
-  };
+  const { countries, isLoading } = stateCountries;
 
-  const activeModal = (id) => {
-    setIndex(id);
-    setShowModal(true);
-  };
-
-  if (!search) {
-    filtered = countries;
-  } else {
-    countries.filter((country) => {
-      if (
-        // search name, region
-        country.name.common
-          .toLowerCase()
-          .includes(search.toLocaleLowerCase()) ||
-        country.region.toLowerCase().includes(search.toLocaleLowerCase())
-      ) {
-        filtered.push(country);
-      } else {
-        // Search language
-        if (country.languages) {
-          const language = country.languages;
-          const lan = Object.values(language);
-          lan.map((language) => {
-            if (language.toLowerCase().includes(search.toLocaleLowerCase())) {
-              filtered.push(country);
-            }
-          });
-        } else {
-        }
-      }
-      if (country.capital) {
-        // search capital
-        country.capital.map((capital) => {
-          if (capital.toLowerCase().includes(search.toLocaleLowerCase())) {
-            filtered.push(country);
-          }
-        });
-      }
-    });
-  }
-
-  const changeCountry = (option) => {
-    if (option == 1) {
-      setIndex(index + 1);
-    } else {
-      setIndex(index - 1);
-    }
-  };
+  const { search, filtered, handleChange } = useSearch(countries);
+  const {
+    activeModal,
+    hiddenModal,
+    index,
+    changeCountry,
+    showModal,
+    classBlur,
+  } = useModal({
+    showModal: false,
+    classBlur: false,
+  });
 
   return (
     <main className="">
@@ -95,9 +45,7 @@ const App = () => {
         </div>
       </div>
       <div
-        className={`pt-40 md:pt-24 px-5 blur-md ${
-          classBlur === true ? "blur-md" : "blur-none"
-        }`}
+        className={`pt-40 md:pt-24 px-5 ${classBlur && "blur-md"} `}
         id="anchor"
       >
         <div className="flex justify-center mb-8 mt-4">
@@ -108,26 +56,38 @@ const App = () => {
             placeholder="Search a country"
             onChange={handleChange}
           />
-          <button
-            className="border-t shadow-lg border-b border-r px-6 py-2 border border-sky-500 rounded-tr rounded-br bg-sky-500 text-white "
-            onClick={() => setShowModal(true)}
-          >
+          <button className="border-t shadow-lg border-b border-r px-6 py-2 border border-sky-500 rounded-tr rounded-br bg-sky-500 text-white ">
             search
           </button>
         </div>
         <div className="flex flex-wrap items-center justify-center">
-          {filtered.map((country, index) => (
-            <Cards
-              key={index}
-              id={index}
-              country={country}
-              search={search}
-              handleModal={(id) => {
-                setClassBlur(true);
-                activeModal(id);
-              }}
-            />
-          ))}
+          {isLoading ? (
+            <span>Loading...</span>
+          ) : (
+            filtered.map((country, index) => (
+              <Cards
+                key={index}
+                id={index}
+                country={country}
+                search={search}
+                handleModal={(id) => {
+                  activeModal(id);
+                }}
+              />
+            ))
+          )}
+          {filtered.length === 0 && isLoading === false ? (
+            <div className="w-full flex flex-col justify-center">
+              <p className="text-3xl mb-4 font-bold text-slate-800 text-center">
+                COUNTRY NOT FOUND
+              </p>
+              <span className="w-56 text-center font-bold text-slate-800 text-xl m-auto text-ellipsis overflow-hidden whitespace-nowrap">
+                {search}
+              </span>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <Modal
@@ -135,8 +95,7 @@ const App = () => {
         countries={filtered}
         position={index}
         hiddenModal={() => {
-          setClassBlur(false);
-          setShowModal(false);
+          hiddenModal();
         }}
         next={() => {
           const option = 1;
@@ -150,7 +109,6 @@ const App = () => {
       <FloatButton
         handleModal={() => {
           const id = index;
-          setClassBlur(true);
           activeModal(id);
         }}
       />
