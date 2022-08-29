@@ -1,4 +1,4 @@
-import { faFlag } from "@fortawesome/free-solid-svg-icons";
+import { faFlag, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,8 +33,8 @@ const App = () => {
   });
 
   return (
-    <main className="">
-      <div className="px-8 py-4 flex flex-col md:flex-row justify-center md:justify-between bg-gray-800 h-18 shadow-md shadow-slate-500 fixed w-full z-20">
+    <main>
+      <div className="px-8 py-4 flex flex-col md:flex-row justify-center md:justify-between bg-gray-800 h-18 fixed w-full z-20">
         <div className="flex w-full">
           <div className="text-3xl font-extrabold md:mr-12 uppercase text-left mb-4 md:mb-0 text-white w-1/2">
             <span className="w-full">Meet the world</span>
@@ -49,16 +49,18 @@ const App = () => {
         id="anchor"
       >
         <div className="flex justify-center mb-8 mt-4">
-          <input
-            className="bg-white shadow-md appearance-none text-md border border-white rounded-tl rounded-bl w-1/3 p-5 text-gray-700 leading-tight focus:outline-none"
-            id="inline-password"
-            type="text"
-            placeholder="Search a country"
-            onChange={handleChange}
-          />
-          <button className="border-t shadow-lg border-b border-r px-6 py-2 border border-sky-500 rounded-tr rounded-br bg-sky-500 text-white ">
-            search
-          </button>
+          <div className="bg-white border rounded-xl flex items-center justify-center relative p-2 w-3/12 shadow-md">
+            <input
+              className="appearance-none text-md rounded-tl rounded-bl text-gray-700 leading-tight focus:outline-none w-full p-3"
+              id="inline-password"
+              type="text"
+              placeholder="Search a country"
+              onChange={handleChange}
+            />
+            <span className="flex items-center justify-center absolute right-4 text-gray-600 font-bold">
+              <FontAwesomeIcon icon={faSearch} />
+            </span>
+          </div>
         </div>
         <div className="flex flex-wrap items-center justify-center">
           {isLoading ? (

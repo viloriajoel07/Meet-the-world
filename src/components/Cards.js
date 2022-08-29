@@ -15,7 +15,7 @@ const Card = ({ country, id, handleModal, search }) => {
   return (
     <>
       <a id={id} onClick={(e) => handleModal(id)}>
-        <div className="block rounded-lg bg-white shadow-2xl shadow-gray-400 gray-person w-96 text-center m-4 cursor-pointer hover:scale-105 transition-all z-10">
+        <div className="block rounded-lg bg-white shadow-2xl gray-person w-96 text-center m-4 cursor-pointer hover:scale-105 transition-all z-10">
           <div className="p-6">
             <div className="m-auto w-40 h-40 my-8 rounded-full z-40">
               <img

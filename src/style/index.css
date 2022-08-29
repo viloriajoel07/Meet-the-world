@@ -8,11 +8,14 @@
 }
 
 body {
+  background-color: rgb(243 244 246);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 main {
-  scroll-behavior: smooth;
-  transition: 1;
   width: 100%;
   height: 100%;
 }
