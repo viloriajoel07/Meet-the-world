@@ -33,7 +33,7 @@ const App = () => {
   });
 
   return (
-    <main>
+    <main className="">
       <div className="px-8 py-4 flex flex-col md:flex-row justify-center md:justify-between bg-gray-800 h-18 fixed w-full z-20">
         <div className="flex w-full">
           <div className="text-3xl font-extrabold md:mr-12 uppercase text-left mb-4 md:mb-0 text-white w-1/2">
@@ -45,11 +45,13 @@ const App = () => {
         </div>
       </div>
       <div
-        className={`pt-40 md:pt-24 px-5 ${classBlur && "blur-md"} `}
+        className={`pt-40 md:pt-24 px-24 ${
+          classBlur && "blur-md"
+        } border border-red-600 `}
         id="anchor"
       >
-        <div className="flex justify-center mb-8 mt-4">
-          <div className="bg-white border rounded-xl flex items-center justify-center relative p-2 w-3/12 shadow-md">
+        <div className="flex justify-center mb-8 mt-4 border border-green-600">
+          <div className="bg-white border rounded-xl flex items-center justify-center relative p-2 w-full sm:w-[24rem] shadow-md">
             <input
               className="appearance-none text-md rounded-tl rounded-bl text-gray-700 leading-tight focus:outline-none w-full p-3"
               id="inline-password"
@@ -62,7 +64,7 @@ const App = () => {
             </span>
           </div>
         </div>
-        <div className="flex flex-wrap items-center justify-center">
+        <div className="flex flex-wrap items-center justify-center border border-blue-600">
           {isLoading ? (
             <span>Loading...</span>
           ) : (
@@ -108,12 +110,12 @@ const App = () => {
           changeCountry(option);
         }}
       />
-      <FloatButton
+      {/* <FloatButton
         handleModal={() => {
           const id = index;
           activeModal(id);
         }}
-      />
+      /> */}
     </main>
   );
 };
