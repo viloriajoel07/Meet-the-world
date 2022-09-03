@@ -45,12 +45,10 @@ const App = () => {
         </div>
       </div>
       <div
-        className={`pt-40 md:pt-24 px-24 ${
-          classBlur && "blur-md"
-        } border border-red-600 `}
+        className={`pt-40 md:pt-24 px-24 ${classBlur && "blur-md"}`}
         id="anchor"
       >
-        <div className="flex justify-center mb-8 mt-4 border border-green-600">
+        <div className="flex justify-center mb-8 mt-4">
           <div className="bg-white border rounded-xl flex items-center justify-center relative p-2 w-full sm:w-[24rem] shadow-md">
             <input
               className="appearance-none text-md rounded-tl rounded-bl text-gray-700 leading-tight focus:outline-none w-full p-3"
@@ -64,7 +62,7 @@ const App = () => {
             </span>
           </div>
         </div>
-        <div className="flex flex-wrap items-center justify-center border border-blue-600">
+        <div className="flex flex-wrap items-center justify-center">
           {isLoading ? (
             <span>Loading...</span>
           ) : (
