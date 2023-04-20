@@ -45,7 +45,7 @@ const App = () => {
         </div>
       </div>
       <div
-        className={`pt-40 md:pt-24 px-24 ${classBlur && "blur-md"}`}
+        className={`pt-40 md:pt-24 px-8 ${classBlur && "blur-md"}`}
         id="anchor"
       >
         <div className="flex justify-center mb-8 mt-4">
